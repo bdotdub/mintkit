@@ -105,8 +105,8 @@ module Mintkit
       form.password = @password
       page = @agent.submit(form,form.buttons.first)
 
-      raise FailedLogin unless page.link_with(:text => /Log Out/)
-      @token = CGI::parse(page.link_with(:text => /Log Out/).attributes["href"])["token"][0]
+      raise FailedLogin unless page.link_with(:text => 'Log Out')
+      @token = page.link_with(:text => 'Log Out').uri.to_s.match(/token=([0-9a-zA-Z]*)/)[1]
     end
 
     def logout
